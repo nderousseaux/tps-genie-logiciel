@@ -1,18 +1,34 @@
-image: ruby
+image: python:latest
 
-pages:
+
+build:
+  stage : build
   script:
-  - gem install compass zurb-foundation # CSS stylesheets generation
-  - gem install prawn -v 2.1.0
-  - gem install asciidoctor # HTML generation
-  - gem install asciidoctor-pdf # HTML generation
+    - python -m py_compile src/fizzbuzz/*
 
-  - asciidoctor src/mon_best_seller.adoc -o public/index.html
-  - asciidoctor-pdf src/mon_best_seller.adoc -o public/mon_best_seller.pdf
+tests:
+  stage: tests
+  script:
+    - pip install tox
+    - tox -c ./src/tox.ini
 
-  artifacts:
-    paths:
-    - public
+stages:
+  - build
+  - tests
 
-  only:
-  - master
+# pages:
+#   script:
+#   - gem install compass zurb-foundation # CSS stylesheets generation
+#   - gem install prawn -v 2.1.0
+#   - gem install asciidoctor # HTML generation
+#   - gem install asciidoctor-pdf # HTML generation
+
+#   - asciidoctor src/mon_best_seller.adoc -o public/index.html
+#   - asciidoctor-pdf src/mon_best_seller.adoc -o public/mon_best_seller.pdf
+
+#   artifacts:
+#     paths:
+#     - public
+
+#   only:
+#   - master
