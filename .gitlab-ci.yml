@@ -1,0 +1,16 @@
+image: ruby
+
+pages:
+  script:
+  - gem install compass zurb-foundation # CSS stylesheets generation
+  - gem install prawn -v 2.1.0
+  - gem install asciidoctor # HTML generation
+# rajoutez ici la génération du index.html ainsi que du fichier pdf
+# dans un sous-répertoire que vous nommerez "public"
+
+  artifacts:
+    paths:
+    - public
+
+  only:
+  - master
